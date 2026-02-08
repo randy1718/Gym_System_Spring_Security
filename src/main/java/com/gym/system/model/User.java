@@ -2,6 +2,8 @@ package com.gym.system.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -24,5 +26,14 @@ public abstract class User {
     protected String password;
 
     @Column(nullable = false)
+    protected String rawPassword;
+
+    @Column(nullable = false)
     protected boolean isActive;
+
+    @Column
+    protected int failedAttempts;
+
+    @Column
+    protected LocalDateTime lockTime;
 }

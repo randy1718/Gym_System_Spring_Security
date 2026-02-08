@@ -12,7 +12,7 @@ import com.gym.system.dto.TrainingTypesResponse;
 import com.gym.system.model.TrainingType;
 import com.gym.system.repository.TrainingTypeDAO;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

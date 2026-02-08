@@ -1,7 +1,9 @@
 package com.gym.system.service;
 
-import jakarta.transaction.Transactional;
+import com.gym.system.config.WebSecurityConfig;
+import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,10 +26,13 @@ public class DatabaseInitService {
 
     private final UsernameDuplicates usernameDuplicates;
 
+    private final PasswordEncoder passwordEncoder;
+
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public DatabaseInitService(UsernameDuplicates usernameDuplicates) {
+    public DatabaseInitService(UsernameDuplicates usernameDuplicates, PasswordEncoder passwordEncoder) {
         this.usernameDuplicates = usernameDuplicates;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -61,7 +66,10 @@ public class DatabaseInitService {
                 t.setId(null);
                 String username = t.getFirstName() + "." + t.getLastName();
                 t.setUsername(usernameDuplicates.generateUniqueUsername(username));
-                t.setPassword(PasswordGenerator.generate());
+                String rawPassword = PasswordGenerator.generate();
+                String hashedPassword = passwordEncoder.encode(rawPassword);
+                t.setRawPassword(rawPassword);
+                t.setPassword(hashedPassword);
                 t.setIsActive(true);
 
                 em.persist(t);
@@ -83,7 +91,10 @@ public class DatabaseInitService {
                         .getSingleResult();
                 t.setSpecialization(specialization);
                 t.setUsername(usernameDuplicates.generateUniqueUsername(username));
-                t.setPassword(PasswordGenerator.generate());
+                String rawPassword = PasswordGenerator.generate();
+                String hashedPassword = passwordEncoder.encode(rawPassword);
+                t.setRawPassword(rawPassword);
+                t.setPassword(hashedPassword);
                 t.setIsActive(true);
 
                 em.persist(t);

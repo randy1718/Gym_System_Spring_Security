@@ -26,8 +26,9 @@ import com.gym.system.repository.TraineeDAO;
 import com.gym.system.repository.TrainerDAO;
 import com.gym.system.util.PasswordGenerator;
 
-import jakarta.transaction.Transactional;
+
 import com.gym.system.util.UsernameDuplicates;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

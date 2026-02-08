@@ -1,6 +1,7 @@
 package com.gym.system.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,10 @@ public class Trainee extends User {
         this.password = password;
     }
 
+    public void setRawPassword(String password){
+        this.rawPassword = password;
+    }
+
     public boolean getIsActive(){
         return isActive;
     }
@@ -114,6 +119,23 @@ public class Trainee extends User {
 
     public List<Training> getTrainings() {
         return trainings;
+    }
+
+    public void setFailedAttempts(int failedAttempts){
+        this.failedAttempts = failedAttempts;
+    }
+
+    public void setLockTime(LocalDateTime lockTime){
+        this.lockTime = lockTime;
+    }
+
+    public int getFailedAttempts(){
+        return failedAttempts;
+    }
+
+    public boolean isAccountNonLocked() {
+        if (this.lockTime == null) return true;
+        return lockTime.plusMinutes(5).isBefore(LocalDateTime.now());
     }
 
     @Override

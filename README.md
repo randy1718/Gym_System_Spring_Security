@@ -1,4 +1,4 @@
-## Gym CRM System SPRING BOOT
+## Gym CRM System SPRING SECURITY
 
 A simple Gym CRM system built using Spring Core (Java Config).  
 This project manages Trainees, Trainers, Training sessions, and basic in-memory persistence.
